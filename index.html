@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,22 +12,28 @@
     }
   </style>
 </head>
-<body class="bg-slate-900 text-slate-100 antialiased p-3 sm:p-6 font-sans min-h-screen flex items-center justify-center">
+
+<body
+  class="bg-slate-900 text-slate-100 antialiased p-3 sm:p-6 font-sans min-h-screen flex items-center justify-center">
   <div class="w-full max-w-2xl bg-slate-800 border border-slate-700 rounded-2xl p-5 sm:p-8 shadow-2xl">
-    
+
     <!-- Header -->
     <header class="flex items-center justify-between border-b border-slate-700 pb-4 mb-6">
       <div>
         <div class="flex items-center gap-2">
-          <span class="bg-blue-600/20 text-blue-400 text-xs font-semibold px-2.5 py-0.5 rounded-full border border-blue-500/30">3GPP NR Rel-15/17</span>
-          <span class="bg-purple-600/20 text-purple-400 text-xs font-semibold px-2.5 py-0.5 rounded-full border border-purple-500/30">Layer 3 Focus</span>
+          <span
+            class="bg-blue-600/20 text-blue-400 text-xs font-semibold px-2.5 py-0.5 rounded-full border border-blue-500/30">3GPP
+            NR Rel-15/17</span>
+          <span
+            class="bg-purple-600/20 text-purple-400 text-xs font-semibold px-2.5 py-0.5 rounded-full border border-purple-500/30">Layer
+            3 Focus</span>
         </div>
         <h1 class="text-xl sm:text-2xl font-bold mt-2 text-white">5G Telecom & L3 Protocol Quiz</h1>
       </div>
       <div id="score-badge" class="text-right">
         <span class="text-xs text-slate-400 block">Score</span>
         <span id="current-score" class="text-2xl font-bold text-blue-400">0</span>
-        <span class="text-xs text-slate-400">/ 10</span>
+        <span class="text-xs text-slate-400">/ 20</span>
       </div>
     </header>
 
@@ -37,7 +44,8 @@
         <span id="category-badge" class="font-medium text-blue-400">RRC Layer 3</span>
       </div>
       <div class="w-full bg-slate-700 h-2.5 rounded-full overflow-hidden">
-        <div id="progress-bar-fill" class="bg-blue-500 h-full rounded-full transition-all duration-300" style="width: 10%;"></div>
+        <div id="progress-bar-fill" class="bg-blue-500 h-full rounded-full transition-all duration-300"
+          style="width: 10%;"></div>
       </div>
     </div>
 
@@ -66,7 +74,8 @@
       <!-- Footer / Next Button -->
       <div class="flex justify-between items-center pt-2">
         <span id="hint-text" class="text-xs text-slate-400 italic">Select an option to check your answer</span>
-        <button id="next-btn" class="hidden px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-medium text-sm rounded-xl transition duration-150 shadow-md active:scale-95">
+        <button id="next-btn"
+          class="hidden px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-medium text-sm rounded-xl transition duration-150 shadow-md active:scale-95">
           Next Question →
         </button>
       </div>
@@ -74,7 +83,8 @@
 
     <!-- Results Screen -->
     <div id="results-screen" class="hidden text-center py-6">
-      <div class="w-20 h-20 rounded-full mx-auto flex items-center justify-center mb-4 border-2 border-blue-500/30 bg-blue-500/10">
+      <div
+        class="w-20 h-20 rounded-full mx-auto flex items-center justify-center mb-4 border-2 border-blue-500/30 bg-blue-500/10">
         <span id="final-trophy" class="text-3xl">🏆</span>
       </div>
       <h2 class="text-2xl font-bold mb-2 text-white">Test Completed!</h2>
@@ -87,12 +97,13 @@
         </div>
         <div class="p-4 rounded-xl border border-slate-700 bg-slate-900/50">
           <div class="text-xs text-slate-400 mb-1">Correct Answers</div>
-          <div id="final-correct-val" class="text-2xl font-bold text-emerald-400">0 / 10</div>
+          <div id="final-correct-val" class="text-2xl font-bold text-emerald-400">0 / 20</div>
         </div>
       </div>
 
       <div class="flex justify-center gap-3">
-        <button id="restart-btn" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm rounded-xl transition shadow-lg active:scale-95">
+        <button id="restart-btn"
+          class="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm rounded-xl transition shadow-lg active:scale-95">
           🔄 Retake Quiz
         </button>
       </div>
@@ -231,6 +242,137 @@
         ],
         answer: 1,
         explanation: "NAS security terminates at the AMF. The AMF negotiates NAS ciphering and integrity keys (K_NASint, K_NASenc) derived from the Kamf key, keeping control signaling end-to-end encrypted between UE and 5G Core."
+      },
+      // ==================== 5G HANDOVER & CHO QUESTIONS ====================
+      {
+        category: "5G Handover Basics",
+        spec: "3GPP TS 38.300",
+        question: "In 5G NR, what is the primary RRC message used by the source gNB to command the UE to perform a handover to a target cell?",
+        options: [
+          "RRCSetup",
+          "RRCReconfiguration (with reconfigurationWithSync)",
+          "RRCResumeRequest",
+          "MobilityFromNRCommand"
+        ],
+        answer: 1,
+        explanation: "The source gNB sends an RRCReconfiguration message containing the 'reconfigurationWithSync' IE to the UE. This IE includes the target cell's configuration, new C-RNTI, and RACH parameters needed to access the target cell."
+      },
+      {
+        category: "Handover Types",
+        spec: "3GPP TS 38.300",
+        question: "Which 3GPP interface is used for inter-gNB handover when a direct connection exists between the source and target gNBs (without involving the 5G Core)?",
+        options: [
+          "NG interface (N2)",
+          "F1 interface",
+          "Xn interface",
+          "E1 interface"
+        ],
+        answer: 2,
+        explanation: "Xn-based handover is performed directly between two gNBs over the Xn interface without involving the AMF in path switching until after the handover completes. When no Xn connection exists, the handover falls back to NG (N2)-based handover through the AMF."
+      },
+      {
+        category: "Measurement Events",
+        spec: "3GPP TS 38.331",
+        question: "Which NR measurement event triggers when a neighbour cell becomes better than the serving cell by an offset, and is the most commonly used event for handover decisions?",
+        options: [
+          "Event A1 (Serving becomes better than threshold)",
+          "Event A2 (Serving becomes worse than threshold)",
+          "Event A3 (Neighbour becomes offset better than serving)",
+          "Event A5 (Serving worse than threshold1 AND neighbour better than threshold2)"
+        ],
+        answer: 2,
+        explanation: "Event A3 fires when a neighbour cell's RSRP/RSRQ/SINR becomes better than the serving cell's by a configured offset (a3-Offset) for a time-to-trigger (TTT) duration. It is the primary event used for intra-frequency and inter-frequency mobility-based handovers."
+      },
+      {
+        category: "Conditional Handover (CHO)",
+        spec: "3GPP TS 38.331 (Rel-16)",
+        question: "What is Conditional Handover (CHO) in 5G NR?",
+        options: [
+          "A handover that requires NAS-level approval from the AMF before execution",
+          "A handover where the UE receives candidate cell configurations in advance and executes the handover autonomously when configured conditions are met",
+          "A handover that is only triggered by the network without any UE measurements",
+          "A handover exclusively used for inter-RAT mobility from NR to LTE"
+        ],
+        answer: 1,
+        explanation: "CHO (introduced in 3GPP Rel-16) allows the source gNB to pre-configure the UE with one or more candidate target cell configurations along with execution conditions. The UE autonomously triggers the handover when the conditions (e.g., measurement thresholds) are satisfied, significantly reducing handover failures and latency."
+      },
+      {
+        category: "CHO Execution",
+        spec: "3GPP TS 38.331 (Rel-16)",
+        question: "In Conditional Handover, what happens if the UE's measurement conditions are met for multiple candidate target cells simultaneously?",
+        options: [
+          "The handover is cancelled and the UE stays on the source cell",
+          "The UE selects the first candidate cell in the configured list order",
+          "The UE selects the cell with the best measured quality among the candidates whose conditions are satisfied",
+          "The network sends a new RRCReconfiguration to resolve the conflict"
+        ],
+        answer: 2,
+        explanation: "When multiple CHO candidate cells satisfy their execution conditions simultaneously, the UE selects the cell with the best measured radio quality (e.g., highest RSRP). This ensures the UE always moves to the strongest available target, maximizing handover success rate."
+      },
+      {
+        category: "CHO vs Baseline HO",
+        spec: "3GPP TS 38.300 (Rel-16)",
+        question: "What is the key advantage of Conditional Handover (CHO) over baseline (legacy) handover in 5G NR?",
+        options: [
+          "CHO eliminates the need for measurement reports entirely",
+          "CHO reduces handover interruption time to zero",
+          "CHO reduces handover failure rate (HOF) by decoupling the handover preparation and execution phases",
+          "CHO allows handover without any Xn or NG signaling"
+        ],
+        answer: 2,
+        explanation: "In baseline HO, the network prepares and immediately triggers execution, creating a tight timing dependency. CHO decouples these phases: preparation happens early (when radio is still good), and execution happens later when conditions are met. This drastically reduces HOF, especially in high-speed mobility and ping-pong scenarios."
+      },
+      {
+        category: "CHO Configuration",
+        spec: "3GPP TS 38.331 (Rel-16)",
+        question: "How does the source gNB deliver CHO candidate cell configurations to the UE?",
+        options: [
+          "Via SIB broadcast from the target cell",
+          "Via NAS message through the AMF",
+          "Via RRCReconfiguration message containing condReconfigToAddModList with conditionalReconfiguration IE",
+          "Via MAC Control Element (MAC CE)"
+        ],
+        answer: 2,
+        explanation: "The source gNB sends an RRCReconfiguration message containing the 'condReconfigToAddModList' IE, which includes the candidate cell configurations and their associated execution conditions (measurement thresholds and events). The UE stores these and evaluates them against ongoing measurements."
+      },
+      {
+        category: "DAPS Handover",
+        spec: "3GPP TS 38.300 (Rel-16)",
+        question: "What is DAPS (Dual Active Protocol Stack) handover in 5G NR?",
+        options: [
+          "A handover where the UE maintains connections to both source and target cells simultaneously during the handover to achieve zero-interruption data transfer",
+          "A handover between two different PLMN operators",
+          "A handover that uses two NAS connections at the same time",
+          "A handover exclusive to Non-Standalone (NSA) mode"
+        ],
+        answer: 0,
+        explanation: "DAPS handover (Rel-16) allows the UE to maintain an active data connection with the source cell while simultaneously performing RACH and synchronization with the target cell. This minimizes or eliminates user-plane interruption time, which is critical for URLLC services."
+      },
+      {
+        category: "Handover Interruption",
+        spec: "3GPP TS 38.133",
+        question: "In a standard intra-frequency 5G NR handover (baseline, non-DAPS), what is the typical maximum user-plane interruption time?",
+        options: [
+          "0 ms (zero interruption)",
+          "Up to 6 ms",
+          "Up to 20–30 ms",
+          "Up to 200 ms"
+        ],
+        answer: 2,
+        explanation: "During a baseline intra-frequency NR handover, the UE must detach from the source cell, perform random access (RACH) on the target cell, and re-establish the uplink. This results in a typical interruption of around 20–30 ms (specified in TS 38.133), though DAPS handover can reduce this to near-zero."
+      },
+      {
+        category: "CHO & Mobility Robustness",
+        spec: "3GPP TS 38.300 / TS 38.331",
+        question: "In the context of Mobility Robustness Optimization (MRO), what specific problem does CHO help solve compared to baseline handover?",
+        options: [
+          "Eliminates the need for Handover Margin (HOM) tuning",
+          "Prevents Too-Early Handover, Too-Late Handover, and Handover to Wrong Cell failures by allowing early preparation of multiple candidates",
+          "Removes the requirement for Time-to-Trigger (TTT) in measurement events",
+          "Replaces the A3 measurement event with a new CHO-specific event"
+        ],
+        answer: 1,
+        explanation: "CHO addresses all three classic HOF types: Too-Late HO (radio link fails before HO command arrives), Too-Early HO (UE handed over too soon and bounces back), and HO to Wrong Cell (UE sent to a sub-optimal target). By pre-configuring multiple candidates with condition-based execution, CHO provides a safety net that baseline single-target HO cannot offer."
       }
     ];
 
@@ -294,7 +436,7 @@
         currentScoreEl.textContent = score;
         buttons[selectedIndex].classList.remove('border-slate-700', 'bg-slate-900/60');
         buttons[selectedIndex].classList.add('border-emerald-500', 'bg-emerald-500/10', 'text-emerald-300');
-        
+
         explanationBadge.textContent = "CORRECT";
         explanationBadge.className = "text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30";
         explanationBox.className = "rounded-xl p-4 border border-emerald-500/30 bg-emerald-500/10 mb-5";
@@ -367,5 +509,5 @@
     renderQuestion();
   </script>
 </body>
-</html>
 
+</html>
