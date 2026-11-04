@@ -41,11 +41,21 @@
     <div class="mb-6">
       <div class="flex justify-between text-xs text-slate-400 mb-1.5">
         <span id="question-progress-label">Question 1 of 10</span>
-        <span id="category-badge" class="font-medium text-blue-400">RRC Layer 3</span>
+        <div class="flex items-center gap-3">
+          <span id="category-badge" class="font-medium text-blue-400">RRC Layer 3</span>
+          <span id="timer-display" class="flex items-center gap-1 font-mono font-bold text-sm text-amber-400">
+            <span>⏱</span><span id="timer-seconds">20</span><span class="text-xs font-normal">s</span>
+          </span>
+        </div>
       </div>
-      <div class="w-full bg-slate-700 h-2.5 rounded-full overflow-hidden">
+      <div class="w-full bg-slate-700 h-2.5 rounded-full overflow-hidden relative">
         <div id="progress-bar-fill" class="bg-blue-500 h-full rounded-full transition-all duration-300"
           style="width: 10%;"></div>
+      </div>
+      <!-- Timer Bar -->
+      <div class="w-full bg-slate-700 h-1.5 rounded-full overflow-hidden mt-1.5">
+        <div id="timer-bar-fill" class="bg-amber-400 h-full rounded-full transition-all duration-1000 ease-linear"
+          style="width: 100%;"></div>
       </div>
     </div>
 
@@ -390,6 +400,9 @@
     let currentQuestionIndex = 0;
     let score = 0;
     let answered = false;
+    let timerInterval = null;
+    let timeLeft = 20;
+    const TIMER_DURATION = 20;
 
     const questionProgressLabel = document.getElementById('question-progress-label');
     const categoryBadge = document.getElementById('category-badge');
@@ -399,12 +412,81 @@
     const explanationBox = document.getElementById('explanation-box');
     const explanationBadge = document.getElementById('explanation-badge');
     const specReference = document.getElementById('spec-reference');
+    const timerSecondsEl = document.getElementById('timer-seconds');
+    const timerBarFill = document.getElementById('timer-bar-fill');
+    const timerDisplay = document.getElementById('timer-display');
     const explanationText = document.getElementById('explanation-text');
     const nextBtn = document.getElementById('next-btn');
     const currentScoreEl = document.getElementById('current-score');
     const quizScreen = document.getElementById('quiz-screen');
     const resultsScreen = document.getElementById('results-screen');
     const restartBtn = document.getElementById('restart-btn');
+
+    function startTimer() {
+      stopTimer();
+      timeLeft = TIMER_DURATION;
+      timerSecondsEl.textContent = timeLeft;
+      timerBarFill.style.width = '100%';
+      timerDisplay.classList.remove('text-red-400');
+      timerDisplay.classList.add('text-amber-400');
+      timerBarFill.classList.remove('bg-red-500');
+      timerBarFill.classList.add('bg-amber-400');
+
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        timerSecondsEl.textContent = timeLeft;
+        timerBarFill.style.width = `${(timeLeft / TIMER_DURATION) * 100}%`;
+
+        // Turn red when 5 seconds or less remain
+        if (timeLeft <= 5) {
+          timerDisplay.classList.remove('text-amber-400');
+          timerDisplay.classList.add('text-red-400');
+          timerBarFill.classList.remove('bg-amber-400');
+          timerBarFill.classList.add('bg-red-500');
+        }
+
+        if (timeLeft <= 0) {
+          stopTimer();
+          timeExpired();
+        }
+      }, 1000);
+    }
+
+    function stopTimer() {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+    }
+
+    function timeExpired() {
+      if (answered) return;
+      answered = true;
+      document.getElementById('hint-text').classList.add('hidden');
+
+      const q = questions[currentQuestionIndex];
+      const buttons = optionsContainer.querySelectorAll('button');
+      buttons.forEach(btn => btn.disabled = true);
+
+      // Highlight the correct answer in green
+      buttons[q.answer].classList.remove('border-slate-700', 'bg-slate-900/60');
+      buttons[q.answer].classList.add('border-emerald-500', 'bg-emerald-500/10', 'text-emerald-300');
+
+      explanationBadge.textContent = "⏰ TIME'S UP";
+      explanationBadge.className = "text-xs font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30";
+      explanationBox.className = "rounded-xl p-4 border border-amber-500/30 bg-amber-500/10 mb-5";
+
+      specReference.textContent = q.spec;
+      explanationText.textContent = q.explanation;
+      explanationBox.classList.remove('hidden');
+
+      if (currentQuestionIndex < questions.length - 1) {
+        nextBtn.textContent = "Next Question →";
+      } else {
+        nextBtn.textContent = "See Final Results 🏆";
+      }
+      nextBtn.classList.remove('hidden');
+    }
 
     function renderQuestion() {
       answered = false;
@@ -430,11 +512,15 @@
         btn.onclick = () => selectOption(idx);
         optionsContainer.appendChild(btn);
       });
+
+      // Start the 20-second countdown
+      startTimer();
     }
 
     function selectOption(selectedIndex) {
       if (answered) return;
       answered = true;
+      stopTimer();
       document.getElementById('hint-text').classList.add('hidden');
 
       const q = questions[currentQuestionIndex];
