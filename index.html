@@ -83,6 +83,9 @@
 
       <!-- Footer / Next Button -->
       <div class="flex justify-between items-center pt-2">
+        <button id="restart-mid-btn" class="px-4 py-2 border border-slate-600 hover:border-slate-400 text-slate-400 hover:text-white font-medium text-xs rounded-xl transition duration-150 active:scale-95">
+          🔄 Restart
+        </button>
         <span id="hint-text" class="text-xs text-slate-400 italic">Select an option to check your answer</span>
         <button id="next-btn"
           class="hidden px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-medium text-sm rounded-xl transition duration-150 shadow-md active:scale-95">
@@ -593,7 +596,8 @@
       }
     }
 
-    restartBtn.onclick = () => {
+    function resetQuiz() {
+      stopTimer();
       shuffleArray(questions);
       currentQuestionIndex = 0;
       score = 0;
@@ -601,7 +605,10 @@
       resultsScreen.classList.add('hidden');
       quizScreen.classList.remove('hidden');
       renderQuestion();
-    };
+    }
+
+    restartBtn.onclick = resetQuiz;
+    document.getElementById('restart-mid-btn').onclick = resetQuiz;
 
     // Initialize
     renderQuestion();
